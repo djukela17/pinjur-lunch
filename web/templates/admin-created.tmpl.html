@@ -1,0 +1,22 @@
+<html>
+	<h1>
+		Mate Caca Admin
+	</h1>
+	<h2>
+	    Create form with meals
+	</h2>
+	<h3>
+	    Check the available meal options for today:
+	</h3>
+
+	<h4>Today meal list</h4>
+	{{ range $i, $dish := .dishes }}
+		{{ $dish.Name }}
+			{{ if $dish.Type }}
+				({{ $dish.Type }})
+			{{ end }}
+		[{{ $dish.DisplayPrice }}]
+		<br />
+	{{ end }}
+
+</html>

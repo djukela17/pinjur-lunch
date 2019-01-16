@@ -9,7 +9,7 @@
 	    Check the available meal options for today:
 	</h3>
 
-	<form method="POST" action="http://localhost:8000/admin/create-meal-form">
+	<form method="POST" action="http://localhost:8000/admin/create">
 
         {{ range $i, $dish := .dishes }}
 			<input type="checkbox" name="dish_{{ $i }}" value="{{ $dish.Name }}">

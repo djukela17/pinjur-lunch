@@ -33,9 +33,11 @@ func CreateRoutes(router *gin.Engine, fullDishList []models.Dish) {
 
 	routeHandler := handlers.DishHandler{FullDishList: fullDishList}
 
+	// admin
 	//router.GET("/api/scrap", handlers.ScrapMealList)
-	router.GET("/admin", routeHandler.AdminCF)
+	router.GET("/admin/create", routeHandler.AdminCreateForm)
+	router.POST("/admin/create", routeHandler.CreateTodayMealList)
 
-	router.POST("/admin/create-meal-form", routeHandler.CreateTodayMealList)
-	//router.GET("/admin/create-form", handlers.AdminCreateForm)
+	// users
+
 }
