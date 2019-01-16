@@ -13,14 +13,12 @@ type DishHandler struct {
 	AvailableDishList []models.Dish
 }
 
-func (d *DishHandler) AdminCF(c *gin.Context) {
-	fmt.Println(d.FullDishList)
+func (d *DishHandler) AdminCreateForm(c *gin.Context) {
 
 	content := gin.H{
 		"title":  "Mate je Caca",
 		"dishes": d.FullDishList,
 	}
-
 	c.HTML(http.StatusOK, "admin.tmpl.html", content)
 }
 
@@ -55,20 +53,25 @@ func (d *DishHandler) AdminCF(c *gin.Context) {
 func (d *DishHandler) CreateTodayMealList(c *gin.Context) {
 	fmt.Println("Create today meal list")
 
-	var dishList []string
+	// check for password
 
 	for i := 0; i < len(d.FullDishList); i++ {
-		dish := c.PostForm("dish_" + strconv.Itoa(i))
-		if dish != "" {
-			dishList = append(dishList, dish)
-			fmt.Println("Dish is empty, breaking out ")
+		dishName := c.PostForm("dish_" + strconv.Itoa(i))
+		if dishName != "" {
+			// find the corresponding dish from the list
+			for _, dish := range d.FullDishList {
+				if dish.Name == dishName {
+					d.AvailableDishList = append(d.AvailableDishList, dish)
+				}
+			}
 		}
 	}
 
-	fmt.Println("selected dishes:")
-	for _, dish := range dishList {
-		fmt.Println(dish)
+	content := gin.H{
+		"dishes": d.AvailableDishList,
 	}
+	c.HTML(http.StatusOK, "admin-created.tmpl.html", content)
+
 }
 
 func GetAvailableMealList(c *gin.Context) {
