@@ -1,0 +1,27 @@
+<html>
+	<h1>
+		Mate Caca Admin
+	</h1>
+	<h2>
+	    Create form with meals
+	</h2>
+	<h3>
+	    Check the available meal options for today:
+	</h3>
+
+	<form method="POST" action="http://localhost:8000/admin/create-meal-form">
+
+        {{ range $i, $dish := .dishes }}
+			<input type="checkbox" name="dish_{{ $i }}" value="{{ $dish.Name }}">
+            {{ $dish.Name }}
+				{{ if $dish.Type }}
+					({{ $dish.Type }})
+				{{ end }}
+			[{{ $dish.DisplayPrice }}]
+            <br />
+        {{ end }}
+		<button type="submit">Submit</button>
+
+	</form>
+
+</html>
