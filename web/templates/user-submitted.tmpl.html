@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Pinjur Meals</title>
+</head>
+<body>
+
+<div class="content">
+
+    {{ if  eq .orderStatus "success" }}
+    {{ .name }}, your order has been placed
+    <br />
+    <h4>Order Info:</h4>
+        <div>
+            Meal: {{ .chosenDish }}
+        </div>
+    {{ else }}
+        {{ .name }}, there was an error while placing your order. Please contact our system administrator
+    {{ end }}
+</div>
+
+</body>
+</html>

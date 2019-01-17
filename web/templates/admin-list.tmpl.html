@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Admin List View</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <h1>Current session user choice list </h1>
+    <h2>Full List as is ({{ len .choices }} submits):</h2>
+    <ul class="list-group">
+        {{ range $i, $choice := .choices }}
+        <li class="list-group-item">
+            {{ $choice.Username }}:
+            {{ $choice.ChosenDish.Name }}
+            {{ if $choice.OptionalNote }}
+                ({{ $choice.OptionalNote}})
+            {{ end }}
+            [{{ $choice.ChosenDish.DisplayPrice }}]
+        </li>
+        {{ end }}
+    </ul>
+
+    <h2>Stacked List</h2>
+    {{ range $item := .stackedList }}
+        {{ $item }}
+        <br />
+    {{ end }}
+</div>
+
+</body>
+</html>

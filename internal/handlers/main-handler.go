@@ -8,18 +8,99 @@ import (
 	"strconv"
 )
 
-type DishHandler struct {
+type MainHandler struct {
 	FullDishList      []models.Dish
 	AvailableDishList []models.Dish
+	DishChoices       models.UserChoices
+	NameList          map[string]string
+	HostAddress       string
 }
 
-func (d *DishHandler) AdminCreateForm(c *gin.Context) {
-
+func (h *MainHandler) AdminCreateForm(c *gin.Context) {
 	content := gin.H{
-		"title":  "Mate je Caca",
-		"dishes": d.FullDishList,
+		"hostAddress": h.HostAddress,
+		"dishes":      h.FullDishList,
 	}
 	c.HTML(http.StatusOK, "admin.tmpl.html", content)
+}
+
+func (h *MainHandler) CreateTodayMealList(c *gin.Context) {
+	fmt.Println("Create today meal list")
+
+	// check for password
+
+	for i := 0; i < len(h.FullDishList); i++ {
+		dishName := c.PostForm("dish_" + strconv.Itoa(i))
+		if dishName != "" {
+			for _, dish := range h.FullDishList {
+				if dish.Name == dishName {
+					h.AvailableDishList = append(h.AvailableDishList, dish)
+				}
+			}
+		}
+	}
+
+	content := gin.H{
+		"dishes": h.AvailableDishList,
+	}
+	c.HTML(http.StatusOK, "admin-created.tmpl.html", content)
+}
+
+func (h *MainHandler) UserForm(c *gin.Context) {
+	fmt.Println(c.ClientIP())
+
+	if len(h.AvailableDishList) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound})
+		return
+	}
+	data := gin.H{
+		"hostAddress": h.HostAddress,
+		"dishes":      h.AvailableDishList,
+		"name":        h.NameList[c.ClientIP()],
+	}
+	c.HTML(http.StatusOK, "user.tmpl.html", data)
+}
+
+func (h *MainHandler) UpdateActiveDishList(c *gin.Context) {
+	fmt.Println("Updating dish choices")
+
+	chosenDish := c.PostForm("dish")
+	username := c.PostForm("username")
+	optionalNote := c.PostForm("optional-note")
+
+	fmt.Println("Client IP:", c.ClientIP())
+	fmt.Println("Selected dish:", chosenDish)
+	fmt.Println("username:", username)
+	fmt.Println("extra note:", optionalNote)
+
+	if err := h.DishChoices.AddDish(h.AvailableDishList, chosenDish, username, optionalNote); err != nil {
+		fmt.Println(err)
+		return
+	}
+	data := gin.H{
+		"name":         h.NameList[c.ClientIP()],
+		"chosenDish":   chosenDish,
+		"optionalNote": optionalNote,
+		"orderStatus":  "success",
+	}
+	c.HTML(http.StatusOK, "user-submitted.tmpl.html", data)
+}
+
+func (h *MainHandler) ListActiveChoices(c *gin.Context) {
+	fmt.Println(h.DishChoices)
+
+	data := gin.H{
+		"choices":     h.DishChoices.GetUserChoices(),
+		"stackedList": h.DishChoices.CreateCompressedList(),
+	}
+	c.HTML(http.StatusOK, "admin-list.tmpl.html", data)
+}
+
+func CreateHostAddress(host, port string) string {
+	if port != ":80" {
+		return host + port
+	}
+	return host
 }
 
 //func ScrapMealList(c *gin.Context) {
@@ -49,31 +130,3 @@ func (d *DishHandler) AdminCreateForm(c *gin.Context) {
 //
 //	c.JSON(http.StatusOK, gin.H{ "status": http.StatusOK, "data": dishes })
 //}
-
-func (d *DishHandler) CreateTodayMealList(c *gin.Context) {
-	fmt.Println("Create today meal list")
-
-	// check for password
-
-	for i := 0; i < len(d.FullDishList); i++ {
-		dishName := c.PostForm("dish_" + strconv.Itoa(i))
-		if dishName != "" {
-			// find the corresponding dish from the list
-			for _, dish := range d.FullDishList {
-				if dish.Name == dishName {
-					d.AvailableDishList = append(d.AvailableDishList, dish)
-				}
-			}
-		}
-	}
-
-	content := gin.H{
-		"dishes": d.AvailableDishList,
-	}
-	c.HTML(http.StatusOK, "admin-created.tmpl.html", content)
-
-}
-
-func GetAvailableMealList(c *gin.Context) {
-
-}
