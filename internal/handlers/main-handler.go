@@ -9,11 +9,25 @@ import (
 )
 
 type MainHandler struct {
-	FullDishList      []models.Dish
+	AllDishList  models.DishCollection
+	FullDishList []models.Dish
+
 	AvailableDishList []models.Dish
-	DishChoices       models.UserChoices
-	NameList          map[string]string
-	HostAddress       string
+	AvailableDishes   models.DishCollection
+
+	DishChoices models.UserChoices
+	NameList    map[string]string
+	HostAddress string
+}
+
+func NewMainHandler(allDishList models.DishCollection, nameList map[string]string, host, port string) MainHandler {
+	return MainHandler{
+		AllDishList: allDishList,
+
+		NameList: nameList,
+
+		HostAddress: CreateHostAddress(host, port),
+	}
 }
 
 func (h *MainHandler) AdminCreateForm(c *gin.Context) {

@@ -27,14 +27,12 @@ func (u *UserChoices) AddDish(dishList []Dish, dishName, username, optionalNote 
 			chosenDish := dish
 			choice := UserChoice{Username: username, ChosenDish: chosenDish, OptionalNote: optionalNote}
 			u.Choices = append(u.Choices, choice)
-			fmt.Println("returning nil")
 			fmt.Println(u.Choices)
 			return nil
 		}
 	}
 
 	return fmt.Errorf("could not find the provided dish in the available dish list")
-
 }
 
 func (u *UserChoices) CreateCompressedList() []string {
@@ -47,13 +45,11 @@ func (u *UserChoices) CreateCompressedList() []string {
 			fullChoice += "(" + choice.OptionalNote + ")"
 		}
 		stacked[fullChoice] += 1
-
 	}
 
 	for k, v := range stacked {
 		ret = append(ret, strconv.Itoa(v)+"x "+k)
 	}
-
 	fmt.Println(stacked)
 
 	return ret

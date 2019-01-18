@@ -6,6 +6,14 @@ type DishCollection struct {
 	Dishes []Dish
 }
 
+func NewDishCollection(path string) (DishCollection, error) {
+	dishes, err := LoadDishList(path)
+	if err != nil {
+		return DishCollection{}, fmt.Errorf("file not found")
+	}
+	return DishCollection{Dishes: dishes}, nil
+}
+
 func (c *DishCollection) GetDish(name string) (Dish, error) {
 
 	for _, d := range c.Dishes {
