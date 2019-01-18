@@ -8,6 +8,7 @@
   { "name": "Piletina sjeckana sa gljivama", "default": false, "type": "","price": 3200 },
   { "name": "Polpete", "default": false, "type": "","price": 3300 },
   { "name": "Seljačko varivo", "default": false, "type": "","price": 3000 },
+  { "name": "Skuša sa žara", "default": false, "type": "","price": 3200 },
   { "name": "Svinjetina s bižama", "default": false, "type": "","price": 3000 },
   { "name": "Svinjetina s porilukom", "default": false, "type": "","price": 3000 },
   { "name": "Špageti bolonjez", "default": false, "type": "","price": 3300 },
@@ -17,7 +18,6 @@
 
   { "name": "Musaka", "default": true, "type": "","price": 3000 },
   { "name": "Pohana piletina + prilog", "default": true, "type": "","price": 3000 },
-  { "name": "Skuša sa žara", "default": true, "type": "","price": 3200 },
   { "name": "Seljačka marenda", "default": true, "type": "","price": 3200 },
   { "name": "Lazanje", "default": true, "type": "","price": 3000 },
   { "name": "Kajgane ili omlet", "default": true, "type": "","price": 2500 },
