@@ -1,5 +1,41 @@
 [
   {
+    "ip": "192.168.190.183",
+    "name": "Mico Miloloza"
+  },
+  {
+    "ip": "192.168.190.118",
+    "name": "Marin Miloloza"
+  },
+  {
+    "ip": "192.168.190.117",
+    "name": "Paskvalino Gacina"
+  },
+  {
+    "ip": "192.168.190.214",
+    "name": "Ana Dukic"
+  },
+  {
+    "ip": "192.168.190.109",
+    "name": "Marin Juricev"
+  },
+  {
+    "ip": "192.168.190.235",
+    "name": "Stjepan Misic"
+  },
+  {
+    "ip": "192.168.190.105",
+    "name": "Ivan Bekavac"
+  },
+  {
+    "ip": "192.168.190.103",
+    "name": "Darko Cujic"
+  },
+  {
+    "ip": "192.168.190.108",
+    "name": "Ante Maretic"
+  },
+  {
     "ip": "192.168.190.111",
     "name": "Julian Gracin"
   },
