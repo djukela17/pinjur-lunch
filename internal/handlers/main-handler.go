@@ -65,20 +65,20 @@ func (h *MainHandler) UpdateActiveDishList(c *gin.Context) {
 	fmt.Println("Updating dish choices")
 
 	chosenDish := c.PostForm("dish")
-	username := c.PostForm("username")
+	name := c.PostForm("name")
 	optionalNote := c.PostForm("optional-note")
 
 	fmt.Println("Client IP:", c.ClientIP())
 	fmt.Println("Selected dish:", chosenDish)
-	fmt.Println("username:", username)
+	fmt.Println("name:", name)
 	fmt.Println("extra note:", optionalNote)
 
-	if err := h.DishChoices.AddDish(h.AvailableDishList, chosenDish, username, optionalNote); err != nil {
+	if err := h.DishChoices.AddDish(h.AvailableDishList, chosenDish, name, optionalNote); err != nil {
 		fmt.Println(err)
 		return
 	}
 	data := gin.H{
-		"name":         h.NameList[c.ClientIP()],
+		"name":         name,
 		"chosenDish":   chosenDish,
 		"optionalNote": optionalNote,
 		"orderStatus":  "success",
