@@ -9,13 +9,10 @@ import (
 )
 
 type MainHandler struct {
-	AllDishList  models.DishCollection
-	FullDishList []models.Dish
+	AllDishList     models.DishCollection
+	AvailableDishes models.DishCollection
+	DishChoices     models.UserChoices
 
-	AvailableDishList []models.Dish
-	AvailableDishes   models.DishCollection
-
-	DishChoices models.UserChoices
 	NameList    map[string]string
 	HostAddress string
 }

@@ -19,11 +19,10 @@ func (u *UserChoices) GetUserChoices() []UserChoice {
 	return u.Choices
 }
 
-func (u *UserChoices) AddDish(dish Dish, name, optionalNote string) error {
+func (u *UserChoices) AddDish(dish Dish, name, optionalNote string) {
 	choice := UserChoice{Username: name, ChosenDish: dish, OptionalNote: optionalNote}
 	u.Choices = append(u.Choices, choice)
 	fmt.Println(u.Choices)
-	return nil
 }
 
 func (u *UserChoices) CreateCompressedList() []string {
