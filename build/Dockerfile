@@ -12,4 +12,4 @@ COPY ./web/templates ./web/templates
 EXPOSE 80/tcp
 
 #RUN $app_dir/$app_name
-
+#ENTRYPOINT ["/app/$app_name"]

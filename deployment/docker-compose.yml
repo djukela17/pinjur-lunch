@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   pinjur-lunch-app:
     build:
@@ -7,7 +8,13 @@ services:
     container_name: pinjur-lunch-app-v1
     working_dir: /app
     ports:
+      ## Expose the port depending on the chosen port [default port: 80]
       - "80:80"
-      - "8000:8000"
     command:
-      /app/pinjur-lunch-dev
+      ## Change the run command if you are using the different app name
+      /app/pinjur-lunch-v1
+      ## uncomment the following line to change the port [default :80]
+#      -p 8000
+      ## uncomment the following line to change the host address
+      ## [default host address: 192.168.190.111]
+#      -host 192.168.190.111
