@@ -9,7 +9,4 @@ COPY ./cmd/pinjur-lunch-v1 .
 COPY ./data ./data
 COPY ./web/templates ./web/templates
 
-EXPOSE 80/tcp
-
-#RUN $app_dir/$app_name
-#ENTRYPOINT ["/app/$app_name"]
+EXPOSE 80
