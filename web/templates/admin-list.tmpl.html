@@ -9,7 +9,13 @@
 
 
     <h2>Current session user choice list </h2>
-    <h3>Order List({{ len .choices }} submits):</h3>
+    <h3>Order List:</h3>
+    <p>
+        <strong>Total Orders: {{ len .choices }}</strong>
+    </p>
+    <p>
+        <strong>Total Price: {{ .totalAmount }}</strong>
+    </p>
     <ul class="list-group">
         {{ range $i, $choice := .choices }}
         <li class="list-group-item">
@@ -23,6 +29,7 @@
         {{ end }}
     </ul>
 
+    <hr />
     <h3>Order List</h3>
     Kruh<br />
     {{ range $item := .stackedList }}
@@ -30,7 +37,7 @@
         <br />
     {{ end }}
 
-
+<hr />
     <h3>Today meal list</h3>
 
     {{ range $i, $dish := .dishes }}

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/djukela17/pinjur-lunch/internal/formatters"
 	"github.com/djukela17/pinjur-lunch/internal/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -103,9 +104,10 @@ func (h *MainHandler) UpdateActiveDishList(c *gin.Context) {
 }
 
 func (h *MainHandler) ListActiveChoices(c *gin.Context) {
-	fmt.Println(h.DishChoices)
 
+	fmt.Println(formatters.DisplayPrice(h.DishChoices.CalcTotalPrice()))
 	data := gin.H{
+		"totalAmount": formatters.DisplayPrice(h.DishChoices.CalcTotalPrice()),
 		"dishes":      h.AllDishList.GetAll(),
 		"choices":     h.DishChoices.GetUserChoices(),
 		"stackedList": h.DishChoices.CreateCompressedList(),

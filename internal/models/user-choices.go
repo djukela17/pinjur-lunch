@@ -25,6 +25,14 @@ func (u *UserChoices) AddDish(dish Dish, name, optionalNote string) {
 	fmt.Println(u.Choices)
 }
 
+func (u *UserChoices) CalcTotalPrice() int {
+	total := 0
+	for _, c := range u.Choices {
+		total += c.ChosenDish.Price
+	}
+	return total
+}
+
 func (u *UserChoices) CreateCompressedList() []string {
 	var ret []string
 	stacked := make(map[string]int)
