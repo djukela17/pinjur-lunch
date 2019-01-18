@@ -33,7 +33,7 @@ func NewMainHandler(allDishList models.DishCollection, nameList map[string]strin
 func (h *MainHandler) AdminCreateForm(c *gin.Context) {
 	content := gin.H{
 		"hostAddress": h.HostAddress,
-		"dishes":      h.FullDishList,
+		"dishes":      h.AllDishList.GetAll(),
 	}
 	c.HTML(http.StatusOK, "admin.tmpl.html", content)
 }
@@ -41,21 +41,18 @@ func (h *MainHandler) AdminCreateForm(c *gin.Context) {
 func (h *MainHandler) CreateTodayMealList(c *gin.Context) {
 	fmt.Println("Create today meal list")
 
-	// check for password
-
-	for i := 0; i < len(h.FullDishList); i++ {
+	for i := 0; i < len(h.AllDishList.GetAll()); i++ {
 		dishName := c.PostForm("dish_" + strconv.Itoa(i))
 		if dishName != "" {
-			for _, dish := range h.FullDishList {
-				if dish.Name == dishName {
-					h.AvailableDishList = append(h.AvailableDishList, dish)
-				}
+			dish, err := h.AllDishList.GetDish(dishName)
+			if err == nil {
+				h.AvailableDishes.AddDish(dish)
 			}
 		}
 	}
 
 	content := gin.H{
-		"dishes": h.AvailableDishList,
+		"dishes": h.AvailableDishes.GetAll(),
 	}
 	c.HTML(http.StatusOK, "admin-created.tmpl.html", content)
 }
@@ -63,13 +60,13 @@ func (h *MainHandler) CreateTodayMealList(c *gin.Context) {
 func (h *MainHandler) UserForm(c *gin.Context) {
 	fmt.Println(c.ClientIP())
 
-	if len(h.AvailableDishList) == 0 {
+	if len(h.AllDishList.GetAll()) == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound})
 		return
 	}
 	data := gin.H{
 		"hostAddress": h.HostAddress,
-		"dishes":      h.AvailableDishList,
+		"dishes":      h.AllDishList.GetAll(),
 		"name":        h.NameList[c.ClientIP()],
 	}
 	c.HTML(http.StatusOK, "user.tmpl.html", data)
@@ -87,23 +84,32 @@ func (h *MainHandler) UpdateActiveDishList(c *gin.Context) {
 	fmt.Println("name:", name)
 	fmt.Println("extra note:", optionalNote)
 
-	if err := h.DishChoices.AddDish(h.AvailableDishList, chosenDish, name, optionalNote); err != nil {
-		fmt.Println(err)
+	if dish, err := h.AllDishList.GetDish(chosenDish); err == nil {
+		h.DishChoices.AddDish(dish, name, optionalNote)
+		data := gin.H{
+			"name":         name,
+			"chosenDish":   chosenDish,
+			"optionalNote": optionalNote,
+			"orderStatus":  "success",
+		}
+		c.HTML(http.StatusOK, "user-submitted.tmpl.html", data)
 		return
 	}
+
 	data := gin.H{
 		"name":         name,
 		"chosenDish":   chosenDish,
 		"optionalNote": optionalNote,
-		"orderStatus":  "success",
+		"orderStatus":  "fail",
 	}
-	c.HTML(http.StatusOK, "user-submitted.tmpl.html", data)
+	c.HTML(http.StatusNotFound, "user-submitted.tmpl.html", data)
 }
 
 func (h *MainHandler) ListActiveChoices(c *gin.Context) {
 	fmt.Println(h.DishChoices)
 
 	data := gin.H{
+		"dishes":      h.AllDishList.GetAll(),
 		"choices":     h.DishChoices.GetUserChoices(),
 		"stackedList": h.DishChoices.CreateCompressedList(),
 	}

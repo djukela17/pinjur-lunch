@@ -14,6 +14,10 @@ func NewDishCollection(path string) (DishCollection, error) {
 	return DishCollection{Dishes: dishes}, nil
 }
 
+func (c *DishCollection) AddDish(dish Dish) {
+	c.Dishes = append(c.Dishes, dish)
+}
+
 func (c *DishCollection) GetDish(name string) (Dish, error) {
 
 	for _, d := range c.Dishes {
