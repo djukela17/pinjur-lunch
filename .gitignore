@@ -1,2 +1,6 @@
 .idea
 cmd/
+
+# ignore everything in vendor folder but the vendor.json file
+vendor/*
+!vendor/vendor.json
