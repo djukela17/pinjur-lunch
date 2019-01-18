@@ -1,0 +1,13 @@
+version: '3'
+services:
+  pinjur-lunch-app:
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile
+    container_name: pinjur-lunch-app-v1
+    working_dir: /app
+    ports:
+      - "80:80"
+      - "8000:8000"
+    command:
+      /app/pinjur-lunch-v1
