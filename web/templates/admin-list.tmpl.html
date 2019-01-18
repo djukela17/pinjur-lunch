@@ -5,9 +5,11 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>Current session user choice list </h1>
-    <h2>Full List as is ({{ len .choices }} submits):</h2>
+<div class="container container-main">
+
+
+    <h2>Current session user choice list </h2>
+    <h3>Order List({{ len .choices }} submits):</h3>
     <ul class="list-group">
         {{ range $i, $choice := .choices }}
         <li class="list-group-item">
@@ -21,10 +23,22 @@
         {{ end }}
     </ul>
 
-    <h2>Stacked List</h2>
+    <h3>Order List</h3>
     Kruh<br />
     {{ range $item := .stackedList }}
         {{ $item }}
+        <br />
+    {{ end }}
+
+
+    <h3>Today meal list</h3>
+
+    {{ range $i, $dish := .dishes }}
+        {{ $dish.Name }}
+        {{ if $dish.Type }}
+            ({{ $dish.Type }})
+        {{ end }}
+        [{{ $dish.DisplayPrice }}]
         <br />
     {{ end }}
 </div>

@@ -1,15 +1,13 @@
 <html>
-	<h1>
-		Mate Caca Admin
-	</h1>
-	<h2>
-	    Create form with meals
-	</h2>
-	<h3>
-	    Check the available meal options for today:
-	</h3>
+<head>
+	<title>Admin List View</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
 
-	<h4>Today meal list</h4>
+<body>
+
+<h2>Today meal list</h2>
+
 	{{ range $i, $dish := .dishes }}
 		{{ $dish.Name }}
 			{{ if $dish.Type }}
@@ -18,5 +16,6 @@
 		[{{ $dish.DisplayPrice }}]
 		<br />
 	{{ end }}
+</body>
 
 </html>

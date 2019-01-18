@@ -1,10 +1,16 @@
 <html>
 <head>
     <title>Pinjur Meals</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
+
 <body>
 
-<div class="content">
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    ..:: Evolutio.agency ::..
+</nav>
+
+<div class="container">
 
     {{ if  eq .orderStatus "success" }}
     {{ .name }}, your order has been placed
@@ -14,7 +20,7 @@
             Meal: {{ .chosenDish }}
         </div>
     {{ else }}
-        {{ .name }}, there was an error while placing your order. Please contact our system administrator
+        {{ .name }}, there was an error while placing your order. Please contact our system administrator (Ante Maretic, igra nogomet, ima dobre listove, zdrav momak)
     {{ end }}
 </div>
 
