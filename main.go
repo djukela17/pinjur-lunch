@@ -18,24 +18,15 @@ func main() {
 	flag.Parse()
 	*port = ":" + *port
 
-	//dishes, err := models.NewDishCollection("data/discounted-prices.json")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
 	nameList, err := models.LoadUsernameSuggestList("data/ip-username.json")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	mh := handlers.NewMainHandler(nameList, *host, *port, *mongoURI)
-
 	if err := mh.Init(); err != nil {
 		log.Fatal(err)
 	}
-	//
-	//fmt.Println("2 - mh.AllDishList")
-	//fmt.Println(mh.AllDishList)
 
 	router := gin.Default()
 	router.LoadHTMLGlob("web/templates/*")

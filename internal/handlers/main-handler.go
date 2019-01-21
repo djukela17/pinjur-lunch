@@ -59,7 +59,7 @@ func (h *MainHandler) Init() error {
 	if err != nil {
 		return nil
 	}
-	h.AllDishList = models.NewDishCollection2(dishes)
+	h.AllDishList = models.NewDishCollection(dishes)
 	return nil
 }
 
