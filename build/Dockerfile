@@ -1,12 +1,13 @@
 FROM golang:1.11
 
-ENV app_name pinjur-lunch-v1
-ENV app_dir /app
+WORKDIR /app
 
-WORKDIR $app_dir
-
-COPY ./cmd/pinjur-lunch-v1 .
+COPY ./cmd/pinjur-lunch .
 COPY ./data ./data
 COPY ./web/templates ./web/templates
 
+#run $app_dir/$app_name
+
 EXPOSE 80
+
+ENTRYPOINT ["/app/pinjur-lunch"]

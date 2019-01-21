@@ -2,19 +2,28 @@ version: '3'
 
 services:
   pinjur-lunch-app:
-    build:
-      context: ../
-      dockerfile: ./build/Dockerfile
-    container_name: pinjur-lunch-app-v1
+    image: pinjur-lunch:0.1
+#    build:
+#      context: ../
+#      dockerfile: ./build/Dockerfile2
+    container_name: pinjur-lunch-app
     working_dir: /app
     ports:
       ## Expose the port depending on the chosen port [default port: 80]
       - "80:80"
     command:
+      --p=80
       ## Change the run command if you are using the different app name
-      /app/pinjur-lunch-v1
+#      /app/pinjur-lunch-beta
       ## uncomment the following line to change the port [default :80]
 #      -p 8000
       ## uncomment the following line to change the host address
       ## [default host address: 192.168.190.111]
 #      -host 192.168.190.111
+  mongo-db:
+    container_name: "pinjur-mongo-db"
+    image: mongo:4
+#    volumes:
+#      - ./persist/db:/data/db
+    ports:
+      - "27017:27017"
