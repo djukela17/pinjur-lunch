@@ -9,25 +9,33 @@ import (
 )
 
 var (
-	port = flag.String("p", "80", "custom port value (default 80)")
-	host = flag.String("host", "192.168.190.111", "host address (default: 192.168.190.111")
+	port     = flag.String("p", "80", "custom port value (default 80)")
+	host     = flag.String("host", "192.168.190.111", "host address (default: 192.168.190.111")
+	mongoURI = flag.String("mongo", "mongodb://localhost:27017", "mongo server address [default: mongodb://localhost:27017]")
 )
 
 func main() {
 	flag.Parse()
 	*port = ":" + *port
 
-	dishes, err := models.NewDishCollection("data/discounted-prices.json")
-	if err != nil {
-		log.Fatal(err)
-	}
+	//dishes, err := models.NewDishCollection("data/discounted-prices.json")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
 	nameList, err := models.LoadUsernameSuggestList("data/ip-username.json")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	mh := handlers.NewMainHandler(dishes, nameList, *host, *port)
+	mh := handlers.NewMainHandler(nameList, *host, *port, *mongoURI)
+
+	if err := mh.Init(); err != nil {
+		log.Fatal(err)
+	}
+	//
+	//fmt.Println("2 - mh.AllDishList")
+	//fmt.Println(mh.AllDishList)
 
 	router := gin.Default()
 	router.LoadHTMLGlob("web/templates/*")

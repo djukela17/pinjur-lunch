@@ -1,31 +1,66 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"github.com/djukela17/pinjur-lunch/internal/formatters"
 	"github.com/djukela17/pinjur-lunch/internal/models"
 	"github.com/gin-gonic/gin"
+	"github.com/mongodb/mongo-go-driver/mongo"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type MainHandler struct {
+	// constants
+	HostAddress string
+	MongoURI    string
+
+	AllDishCollectionName string
+	DatabaseName          string
+
+	MongoClient *mongo.Client
+
 	AllDishList     models.DishCollection
 	AvailableDishes models.DishCollection
 	DishChoices     models.UserChoices
 
-	NameList    map[string]string
-	HostAddress string
+	NameList map[string]string
 }
 
-func NewMainHandler(allDishList models.DishCollection, nameList map[string]string, host, port string) MainHandler {
+func NewMainHandler(nameList map[string]string, serveHost, servePort, mongoURI string) MainHandler {
 	return MainHandler{
-		AllDishList: allDishList,
+		MongoURI:    mongoURI,
+		HostAddress: CreateHostAddress(serveHost, servePort),
+
+		AllDishCollectionName: "all-dishes",
+		DatabaseName:          "pinjur",
 
 		NameList: nameList,
-
-		HostAddress: CreateHostAddress(host, port),
 	}
+}
+
+func (h *MainHandler) Init() error {
+
+	client, err := mongo.NewClient(h.MongoURI)
+	if err != nil {
+		return err
+	}
+	// check the mongo connection
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	if err = client.Connect(ctx); err != nil {
+		return err
+	}
+
+	h.MongoClient = client
+
+	dishes, err := h.GetAllDishes()
+	if err != nil {
+		return nil
+	}
+	h.AllDishList = models.NewDishCollection2(dishes)
+	return nil
 }
 
 func (h *MainHandler) AdminCreateForm(c *gin.Context) {
