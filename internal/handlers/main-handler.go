@@ -37,7 +37,6 @@ func (h *MainHandler) AdminCreateForm(c *gin.Context) {
 }
 
 func (h *MainHandler) CreateTodayMealList(c *gin.Context) {
-	fmt.Println("Create today meal list")
 
 	for i := 0; i < len(h.AllDishList.GetAll()); i++ {
 		dishName := c.PostForm("dish_" + strconv.Itoa(i))
@@ -56,22 +55,20 @@ func (h *MainHandler) CreateTodayMealList(c *gin.Context) {
 }
 
 func (h *MainHandler) UserForm(c *gin.Context) {
-	fmt.Println(c.ClientIP())
 
-	if len(h.AllDishList.GetAll()) == 0 {
+	if len(h.AvailableDishes.GetAll()) == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound})
 		return
 	}
 	data := gin.H{
 		"hostAddress": h.HostAddress,
-		"dishes":      h.AllDishList.GetAll(),
+		"dishes":      h.AvailableDishes.GetAll(),
 		"name":        h.NameList[c.ClientIP()],
 	}
 	c.HTML(http.StatusOK, "user.tmpl.html", data)
 }
 
 func (h *MainHandler) UpdateActiveDishList(c *gin.Context) {
-	fmt.Println("Updating dish choices")
 
 	chosenDish := c.PostForm("dish")
 	name := c.PostForm("name")
@@ -105,7 +102,6 @@ func (h *MainHandler) UpdateActiveDishList(c *gin.Context) {
 
 func (h *MainHandler) ListActiveChoices(c *gin.Context) {
 
-	fmt.Println(formatters.DisplayPrice(h.DishChoices.CalcTotalPrice()))
 	data := gin.H{
 		"totalAmount": formatters.DisplayPrice(h.DishChoices.CalcTotalPrice()),
 		"dishes":      h.AllDishList.GetAll(),

@@ -1,6 +1,9 @@
 package models
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestDishCollection_GetDish(t *testing.T) {
 	collection1 := DishCollection{
@@ -21,7 +24,9 @@ func TestDishCollection_GetDish(t *testing.T) {
 	}{
 		{in: "Piletina", wantRes: Dish{Name: "Piletina", Price: 3000}, wantErr: nil},
 		{in: "Hamburger", wantRes: Dish{Name: "Piletina", Price: 2400}, wantErr: nil},
-		{in: "Cheesburger", wantRes: Dish{Name: "Cheesburger", Price: 2500}, wantErr: nil},
+
+		// should fail
+		{in: "Cheesburger", wantRes: Dish{}, wantErr: fmt.Errorf("no dish found")},
 	}
 
 	for _, c := range cases {

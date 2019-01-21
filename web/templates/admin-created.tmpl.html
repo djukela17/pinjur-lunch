@@ -5,17 +5,22 @@
 </head>
 
 <body>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+	Pinjur Lunch
+</nav>
 
-<h2>Today meal list</h2>
+<div class="container">
+	<h2>Today meal list</h2>
 
-	{{ range $i, $dish := .dishes }}
-		{{ $dish.Name }}
-			{{ if $dish.Type }}
-				({{ $dish.Type }})
-			{{ end }}
-		[{{ $dish.DisplayPrice }}]
-		<br />
-	{{ end }}
-</body>
+		{{ range $i, $dish := .dishes }}
+			{{ $dish.Name }}
+				{{ if $dish.Type }}
+					({{ $dish.Type }})
+				{{ end }}
+			[{{ $dish.DisplayPrice }}]
+			<br />
+		{{ end }}
+	</body>
+</div>
 
 </html>

@@ -7,12 +7,18 @@ APP_NAME="pinjur-lunch"
 
 cd $GOPATH/$PROJECT_DIRECTORY
 
-if [[ "$1" = "" ]]; then
-    echo No version specified. Building with default name.
-    go build -o cmd/$APP_NAME main.go
+if [[ ! -z "$GOPATH" ]]; then
+
+    cd ${GOPATH}/${PROJECT_DIRECTORY}
+
+    if [[ "$1" = "" ]]; then
+        echo No version specified. Building with default name.
+        go build -o cmd/${APP_NAME} main.go
+    else
+        echo version name specified
+        go build -o cmd/${APP_NAME}-$1 main.go
+    fi
+
 else
-    echo version name specified
-    go build -o cmd/$APP_NAME-$1 main.go
+    echo no \$GOPATH in \$PATH
 fi
-
-

@@ -4,14 +4,13 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-dark bg-primary">
-	..:: EvolutioIT ::..
-</nav>
-	<h3>
-	    Check the available meal options for today:
-	</h3>
 
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+	Pinjur Lunch
+</nav>
 <div class="container">
+
+	<h3>Check the available meal options for today:</h3>
 	<form method="POST" action="http://{{ .hostAddress }}/admin/create">
 		<ul id="meal-list" class="list-group">
         {{ range $i, $dish := .dishes }}
