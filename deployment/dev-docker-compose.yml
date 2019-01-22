@@ -6,23 +6,24 @@ services:
 #    build:
 #      context: ../
 #      dockerfile: ./build/Dockerfile2
-    container_name: staging.pinjur-lunch-app
+    container_name: dev-pinjur-lunch-app
     working_dir: /app
     ports:
       ## Expose the port depending on the chosen port [default port: 80]
-      - "80:80"
+      - "8000:80"
     command:
-      ## stable configuration
-      -mongo mongodb://mongo-db:27017
+      ## development configuration
+      -mongo mongodb://mongo-db:37017
     depends_on:
       - mongo-db
   mongo-db:
-    container_name: "pinjur-mongo-db"
+    ## development configuration
+    container_name: dev-pinjur-mongo-db
     image: mongo:4
     volumes:
       - mongo-data:/data/db
     ports:
-      - "27017:27017"
+      - "37017:27017"
 
 volumes:
   mongo-data:
