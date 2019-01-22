@@ -42,7 +42,7 @@ func main() {
 func CreateRoutes(router *gin.Engine, routeHandler handlers.MainHandler) {
 
 	// admin
-	router.GET("/admin/create", routeHandler.AdminCreateForm)
+	router.GET("/admin", routeHandler.AdminCreateForm)
 	router.POST("/admin/create", routeHandler.CreateTodayMealList)
 	router.GET("/admin/list", routeHandler.ListActiveChoices)
 
