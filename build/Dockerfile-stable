@@ -1,0 +1,13 @@
+FROM golang:1.11
+
+RUN mkdir /app
+
+WORKDIR /app
+
+COPY ./cmd/pinjur-lunch-stable .
+COPY ./data ./data
+COPY ./web/templates ./web/templates
+
+EXPOSE 80
+
+ENTRYPOINT ["/app/pinjur-lunch-stable"]

@@ -2,22 +2,18 @@ version: '3'
 
 services:
   pinjur-lunch-app:
-    image: pinjur-lunch:0.1
-#    build:
-#      context: ../
-#      dockerfile: ./build/Dockerfile2
-    container_name: staging.pinjur-lunch-app
+    image: pinjur-lunch:stable
+    container_name: pinjur-lunch-stable
     working_dir: /app
     ports:
       ## Expose the port depending on the chosen port [default port: 80]
       - "80:80"
     command:
-      ## stable configuration
       -mongo mongodb://mongo-db:27017
     depends_on:
       - mongo-db
   mongo-db:
-    container_name: "pinjur-mongo-db"
+    container_name: "pinjur-mongo-db-stable"
     image: mongo:4
     volumes:
       - mongo-data:/data/db
@@ -26,5 +22,3 @@ services:
 
 volumes:
   mongo-data:
-
-
