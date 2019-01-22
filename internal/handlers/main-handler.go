@@ -26,6 +26,9 @@ type MainHandler struct {
 	AvailableDishes models.DishCollection
 	DishChoices     models.Orders
 
+	SideDishes models.MealAdditionsCollection
+	Extras     models.MealAdditionsCollection
+
 	NameList map[string]string
 }
 
@@ -59,7 +62,18 @@ func (h *MainHandler) Init() error {
 	if err != nil {
 		return nil
 	}
+
+	h.SideDishes = models.NewAdditionsCollection(h.DatabaseName, "sideDishes")
+	if err := h.SideDishes.LoadAll(h.MongoClient); err != nil {
+		return err
+	}
+	h.Extras = models.NewAdditionsCollection(h.DatabaseName, "extras")
+	if err := h.Extras.LoadAll(h.MongoClient); err != nil {
+		return err
+	}
+
 	h.AllDishList = models.NewDishCollection(dishes)
+
 	return nil
 }
 
