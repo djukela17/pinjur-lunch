@@ -4,10 +4,10 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY ./cmd/pinjur-lunch .
+COPY ./cmd/pinjur-lunch-dev .
 COPY ./data ./data
 COPY ./web/templates ./web/templates
 
 EXPOSE 80
 
-ENTRYPOINT ["/app/pinjur-lunch"]
+ENTRYPOINT ["/app/pinjur-lunch-dev"]

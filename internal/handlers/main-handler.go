@@ -24,7 +24,7 @@ type MainHandler struct {
 
 	AllDishList     models.DishCollection
 	AvailableDishes models.DishCollection
-	DishChoices     models.UserChoices
+	DishChoices     models.Orders
 
 	NameList map[string]string
 }
@@ -140,7 +140,7 @@ func (h *MainHandler) ListActiveChoices(c *gin.Context) {
 	data := gin.H{
 		"totalAmount": formatters.DisplayPrice(h.DishChoices.CalcTotalPrice()),
 		"dishes":      h.AvailableDishes.GetAll(),
-		"choices":     h.DishChoices.GetUserChoices(),
+		"choices":     h.DishChoices.GetOrders(),
 		"stackedList": h.DishChoices.CreateCompressedList(),
 	}
 	c.HTML(http.StatusOK, "admin-list.tmpl.html", data)
