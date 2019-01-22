@@ -7,10 +7,11 @@ services:
     working_dir: /app
     ports:
       ## Expose the port depending on the chosen port [default port: 80]
-      - "8000:80"
+      - 8000:8000
     command:
       ## development configuration
-      -mongo mongodb://mongo-db:37017
+      -p 8000
+      -mongo mongodb://mongo-db:27017
     depends_on:
       - mongo-db
   mongo-db:
@@ -20,7 +21,7 @@ services:
     volumes:
       - mongo-data:/data/db
     ports:
-      - "37017:27017"
+      - 37017:27017
 
 volumes:
   mongo-data:
