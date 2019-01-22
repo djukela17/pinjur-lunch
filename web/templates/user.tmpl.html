@@ -15,7 +15,7 @@
     <h4>If you want to eat something today, please fill in the form</h4>
 
     <div class="form-group">
-        <form method="POST" action="http://{{ .hostAddress }}">
+        <form id="main-form" method="POST" action="http://{{ .hostAddress }}">
             <label for="name" >Name:</label>
             <input class="form-control" type="text" name="name" value="{{ .name }}" />
             <br />
@@ -34,6 +34,11 @@
             </select>
             <br />
 
+            <ul id="meal-list" class="list-group">
+            </ul>
+
+            <br />
+
             <label for="optional-note">Note:</label>
             <input class="form-control"type="text" name="optional-note" value="" placeholder="prilozi"/>
             <br />
@@ -41,5 +46,32 @@
         </form>
     </div>
 </div>
+<script>
+    const dishes = JSON.parse('{{ .dishesJson }}');
+    console.log(dishes);
+
+    const mealList = document.getElementById('meal-list');
+    console.log(mealList);
+
+    let li = document.createElement('li');
+    li.className = "list-group-item";
+
+    let checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = dishes[0].name;
+    checkbox.value = dishes[0].name;
+
+    let label = document.createElement('label');
+    label.innerText = dishes[0].name;
+    label.setAttribute('for', dishes[0].name);
+
+    li.appendChild(checkbox);
+    li.appendChild(label);
+
+    mealList.appendChild(li);
+
+    console.log(mealList)
+</script>
+
 </body>
 </html>
