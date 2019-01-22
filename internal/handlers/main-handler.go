@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/djukela17/pinjur-lunch/internal/formatters"
 	"github.com/djukela17/pinjur-lunch/internal/models"
@@ -58,10 +59,11 @@ func (h *MainHandler) Init() error {
 
 	h.MongoClient = client
 
-	dishes, err := h.GetAllDishes()
-	if err != nil {
-		return nil
-	}
+	// Get the data from the mongo database
+	//dishes, err := h.GetAllDishes()
+	//if err != nil {
+	//	return nil
+	//}
 
 	h.SideDishes = models.NewAdditionsCollection(h.DatabaseName, "sideDishes")
 	if err := h.SideDishes.LoadAll(h.MongoClient); err != nil {
@@ -72,7 +74,13 @@ func (h *MainHandler) Init() error {
 		return err
 	}
 
-	h.AllDishList = models.NewDishCollection(dishes)
+	// Load from a file
+	dishes2, err := models.LoadDishList("data/discounted-prices.json")
+
+	h.AllDishList = models.NewDishCollection(dishes2)
+	if err := h.AllDishList.InsertAll(h.MongoClient, h.DatabaseName, h.AllDishCollectionName, true); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -109,10 +117,21 @@ func (h *MainHandler) UserForm(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound})
 		return
 	}
+
+	dj, err := json.Marshal(h.AllDishList.GetAll())
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(string(dj))
+
 	data := gin.H{
 		"hostAddress": h.HostAddress,
 		"dishes":      h.AvailableDishes.GetAll(),
+		"dishesJson":  string(dj),
 		"name":        h.NameList[c.ClientIP()],
+		"sideDishes":  h.SideDishes,
+		"extras":      h.Extras,
 	}
 	c.HTML(http.StatusOK, "user.tmpl.html", data)
 }
