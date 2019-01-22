@@ -23,24 +23,9 @@ type MealAdditionsCollection struct {
 }
 
 func NewAdditionsCollection(databaseName, collectionName string) MealAdditionsCollection {
-	//jsonData, err := os.Open(path)
-	//if err != nil {
-	//	return MealAdditionsCollection{}, err
-	//}
-	//
-	//byteData, _ := ioutil.ReadAll(jsonData)
-	//defer jsonData.Close()
-	//
-	//var sideDishes []MealAdditions
-	//if err := json.Unmarshal(byteData, &sideDishes); err != nil {
-	//	return MealAdditionsCollection{}, err
-	//}
-
 	adds := MealAdditionsCollection{
 		DatabaseName:   databaseName,
 		CollectionName: collectionName,
-
-		//SideDishes: sideDishes,
 	}
 	return adds
 }
