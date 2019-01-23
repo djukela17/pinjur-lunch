@@ -53,6 +53,19 @@ run the `docker-compose up` with different project name detach it(`-d`)
 docker-compose -p pinjur-lunch-dev up -d
 ```
 
+## Development
+
+### MongoDB container
+
+To deploy a docker container running mongo:4, do the following:
+```bash
+cd deployment/
+```
+docker-compose up with chosen name to prevent volume overrides
+```bash
+docker-compose -p mongo-db-dev up
+```
+
 ## Goals:
 
 - [ ] Create a pure docker based build script so `go` will no longer be a reqirement
