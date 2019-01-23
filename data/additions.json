@@ -1,6 +1,7 @@
 [
   {
-    "sideDishes": [
+    "type": "sideDishes",
+    "list": [
       "pomfrit",
       "blitva i krumpir",
       "pire",
@@ -10,7 +11,8 @@
     ]
   },
   {
-    "extras": [
+    "type": "extras",
+    "list": [
       "ajvar",
       "majoneza",
       "tartar",
@@ -18,7 +20,8 @@
       "kiseli krastavci",
       "zelena salata",
       "kukuruz",
-      "pomidore"
+      "pomidore",
+      "kapula"
     ]
   }
 ]

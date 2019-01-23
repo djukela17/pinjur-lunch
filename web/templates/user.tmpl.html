@@ -34,10 +34,10 @@
             </select>
             <br />
 
-            <ul id="meal-list" class="list-group">
-            </ul>
+            {{/*<ul id="meal-list" class="list-group">*/}}
+            {{/*</ul>*/}}
 
-            <br />
+            {{/*<br />*/}}
 
             <label for="optional-note">Note:</label>
             <input class="form-control"type="text" name="optional-note" value="" placeholder="prilozi"/>
@@ -47,30 +47,30 @@
     </div>
 </div>
 <script>
-    const dishes = JSON.parse('{{ .dishesJson }}');
-    console.log(dishes);
+    {{/*const dishes = JSON.parse('{{ .dishesJson }}');*/}}
+    {{/*console.log(dishes);*/}}
 
-    const mealList = document.getElementById('meal-list');
-    console.log(mealList);
+    {{/*const mealList = document.getElementById('meal-list');*/}}
+    {{/*console.log(mealList);*/}}
 
-    let li = document.createElement('li');
-    li.className = "list-group-item";
+    {{/*let li = document.createElement('li');*/}}
+    {{/*li.className = "list-group-item";*/}}
 
-    let checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.id = dishes[0].name;
-    checkbox.value = dishes[0].name;
+    {{/*let checkbox = document.createElement('input');*/}}
+    {{/*checkbox.type = 'checkbox';*/}}
+    {{/*checkbox.id = dishes[0].name;*/}}
+    {{/*checkbox.value = dishes[0].name;*/}}
 
-    let label = document.createElement('label');
-    label.innerText = dishes[0].name;
-    label.setAttribute('for', dishes[0].name);
+    {{/*let label = document.createElement('label');*/}}
+    {{/*label.innerText = dishes[0].name;*/}}
+    {{/*label.setAttribute('for', dishes[0].name);*/}}
 
-    li.appendChild(checkbox);
-    li.appendChild(label);
+    {{/*li.appendChild(checkbox);*/}}
+    {{/*li.appendChild(label);*/}}
 
-    mealList.appendChild(li);
+    {{/*mealList.appendChild(li);*/}}
 
-    console.log(mealList)
+    {{/*console.log(mealList)*/}}
 </script>
 
 </body>

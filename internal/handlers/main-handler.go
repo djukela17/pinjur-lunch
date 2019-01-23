@@ -30,6 +30,8 @@ type MainHandler struct {
 	SideDishes models.MealAdditionsCollection
 	Extras     models.MealAdditionsCollection
 
+	Extras2 models.MealAdditions2Collection
+
 	NameList map[string]string
 }
 
@@ -100,14 +102,26 @@ func (h *MainHandler) Init() error {
 	//err != nil {
 	//	return err
 	//}
-	//
 
 	// Assign side dishes and extras to dishes
+	lst, err := models.LoadFromFile("data/additions.json")
+	if err != nil {
+		return err
+	}
+	h.Extras2 = models.NewMealAdditions2Collection(lst)
 
-	fmt.Println("extras")
-	fmt.Println(h.Extras)
-	fmt.Println("side dishes")
-	fmt.Println(h.SideDishes)
+	// Assign additions to meals
+	for _, d := range h.AllDishList.GetAll() {
+		switch d.Type {
+		case "sendvic":
+			d.Extras2 = h.Extras2
+			fmt.Println(d.Extras2)
+		default:
+			fmt.Println("no type")
+		}
+	}
+
+	fmt.Println(h.GetAllDishes())
 
 	return nil
 }

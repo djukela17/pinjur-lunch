@@ -16,6 +16,8 @@ type Dish struct {
 	DefaultOn  bool   `json:"default"`
 	SideDishes MealAdditionsCollection
 	Extras     MealAdditionsCollection
+
+	Extras2 MealAdditions2Collection
 }
 
 func (d *Dish) DisplayPrice() string {

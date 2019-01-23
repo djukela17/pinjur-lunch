@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"github.com/djukela17/pinjur-lunch/internal/models"
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo/readpref"
@@ -36,7 +35,6 @@ func (h *MainHandler) GetAllDishes() ([]models.Dish, error) {
 			continue
 		}
 		dishes = append(dishes, dish)
-		fmt.Println(dish)
 	}
 	if err := cur.Err(); err != nil {
 		return nil, err

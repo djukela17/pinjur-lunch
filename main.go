@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/djukela17/pinjur-lunch/internal/handlers"
 	"github.com/djukela17/pinjur-lunch/internal/models"
 	"github.com/gin-gonic/gin"
@@ -27,6 +28,9 @@ func main() {
 	if err := mh.Init(); err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("SHIT")
+	fmt.Println(mh.Extras2)
 
 	router := gin.Default()
 	router.LoadHTMLGlob("web/templates/*")

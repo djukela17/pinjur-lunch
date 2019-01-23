@@ -18,9 +18,28 @@ Before building the project, make sure you are checking out the stable branch
 
 #### Building the image (Dockerfile)
 
-- from the project root:
+From the project root:
 ```bash
 docker build -t pinjur-lunch:stable -f build/Dockerfile-stable .
+```
+
+#### Deploying with docker-compose 
+
+The binary name for development version is: `pinjur-lunch-dev`
+
+cd into deployment directory
+```bash
+cd deployment/
+```
+run the `docker-compose up` with different project name detach it(`-d`)
+```bash
+docker-compose -p pinjur-lunch up -d
+```
+
+### Development version
+From the project root:
+```bash
+docker build -t pinjur-lunch:development -f build/Dockerfile-dev .
 ```
 
 #### Deploying with docker-compose 
@@ -31,7 +50,7 @@ cd deployment/
 ```
 run the `docker-compose up` with different project name detach it(`-d`)
 ```bash
-docker-compose -p pinjur-lunch up -d
+docker-compose -p pinjur-lunch-dev up -d
 ```
 
 ## Goals:
