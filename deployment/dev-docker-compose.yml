@@ -1,4 +1,4 @@
-version: '3'Extras2
+version: '3'
 
 services:
   pinjur-lunch-app:
