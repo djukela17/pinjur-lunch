@@ -2,10 +2,13 @@ package models
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/readpref"
+	"io/ioutil"
+	"os"
 	"time"
 )
 
@@ -19,7 +22,7 @@ type MealAdditionsCollection struct {
 	DatabaseName   string
 	CollectionName string
 
-	SideDishes []MealAdditions
+	Additions []MealAdditions
 }
 
 func NewAdditionsCollection(databaseName, collectionName string) MealAdditionsCollection {
@@ -28,6 +31,23 @@ func NewAdditionsCollection(databaseName, collectionName string) MealAdditionsCo
 		CollectionName: collectionName,
 	}
 	return adds
+}
+
+func NewAdditionsCollectionFromFile(path string) (MealAdditionsCollection, error) {
+	jsonDishData, err := os.Open(path)
+	if err != nil {
+		return MealAdditionsCollection{}, err
+	}
+
+	byteData, _ := ioutil.ReadAll(jsonDishData)
+	defer jsonDishData.Close()
+
+	var adds []MealAdditions
+	if err := json.Unmarshal(byteData, &adds); err != nil {
+		return MealAdditionsCollection{}, err
+	}
+
+	return MealAdditionsCollection{Additions: adds}, nil
 }
 
 func (m *MealAdditionsCollection) LoadAll(client *mongo.Client) error {
@@ -75,8 +95,8 @@ func (m *MealAdditionsCollection) InsertAll(client *mongo.Client, dbName, collNa
 		return err
 	}
 
-	interfaceSlice := make([]interface{}, len(m.SideDishes))
-	for i, d := range m.SideDishes {
+	interfaceSlice := make([]interface{}, len(m.Additions))
+	for i, d := range m.Additions {
 		interfaceSlice[i] = d
 	}
 

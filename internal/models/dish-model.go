@@ -10,10 +10,12 @@ import (
 )
 
 type Dish struct {
-	Name      string `json:"name"`
-	Type      string `json:"type"`
-	Price     int    `json:"price"`
-	DefaultOn bool   `json:"default"`
+	Name       string `json:"name"`
+	Type       string `json:"type"`
+	Price      int    `json:"price"`
+	DefaultOn  bool   `json:"default"`
+	SideDishes MealAdditionsCollection
+	Extras     MealAdditionsCollection
 }
 
 func (d *Dish) DisplayPrice() string {

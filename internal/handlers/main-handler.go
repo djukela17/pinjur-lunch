@@ -60,27 +60,54 @@ func (h *MainHandler) Init() error {
 	h.MongoClient = client
 
 	// Get the data from the mongo database
-	//dishes, err := h.GetAllDishes()
-	//if err != nil {
-	//	return nil
-	//}
-
-	h.SideDishes = models.NewAdditionsCollection(h.DatabaseName, "sideDishes")
-	if err := h.SideDishes.LoadAll(h.MongoClient); err != nil {
-		return err
+	dishes, err := h.GetAllDishes()
+	if err != nil {
+		return nil
 	}
-	h.Extras = models.NewAdditionsCollection(h.DatabaseName, "extras")
-	if err := h.Extras.LoadAll(h.MongoClient); err != nil {
-		return err
-	}
-
 	// Load from a file
-	dishes2, err := models.LoadDishList("data/discounted-prices.json")
+	//dishes, err := models.LoadDishList("data/discounted-prices.json")
 
-	h.AllDishList = models.NewDishCollection(dishes2)
-	if err := h.AllDishList.InsertAll(h.MongoClient, h.DatabaseName, h.AllDishCollectionName, true); err != nil {
+	// Load data from mongo db
+	//h.SideDishes = models.NewAdditionsCollection(h.DatabaseName, "sideDishes")
+	//if err := h.SideDishes.LoadAll(h.MongoClient); err != nil {
+	//	return err
+	//}
+	// Load data from json file
+	sideDishes, err := models.NewAdditionsCollectionFromFile("data/side-dishes.json")
+	if err != nil {
 		return err
 	}
+	h.SideDishes = sideDishes
+
+	// Load data from mongo db
+	//h.Extras = models.NewAdditionsCollection(h.DatabaseName, "extras")
+	//if err := h.Extras.LoadAll(h.MongoClient); err != nil {
+	//	return err
+	//}
+	// Load data from json file
+	extras, err := models.NewAdditionsCollectionFromFile("data/extras.json")
+	if err != nil {
+		return err
+	}
+	h.Extras = extras
+
+	h.AllDishList = models.NewDishCollection(dishes)
+
+	// Replace the old items in mongo db with new ones
+	// should be used when loading list from json file
+	//if err := h.AllDishList.InsertAll(
+	//	h.MongoClient, h.DatabaseName, h.AllDishCollectionName, true);
+	//err != nil {
+	//	return err
+	//}
+	//
+
+	// Assign side dishes and extras to dishes
+
+	fmt.Println("extras")
+	fmt.Println(h.Extras)
+	fmt.Println("side dishes")
+	fmt.Println(h.SideDishes)
 
 	return nil
 }
@@ -122,8 +149,6 @@ func (h *MainHandler) UserForm(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println(string(dj))
 
 	data := gin.H{
 		"hostAddress": h.HostAddress,
