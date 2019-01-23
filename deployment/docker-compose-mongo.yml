@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  mongo-db:
+    container_name: "mongo-db-dev"
+    image: mongo:4
+    volumes:
+      - mongo-data-dev:/data/db
+    ports:
+      - "40000:27017"
+
+volumes:
+  mongo-data-dev:
