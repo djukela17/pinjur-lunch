@@ -50,4 +50,7 @@ func CreateRoutes(router *gin.Engine, routeHandler handlers.MainHandler) {
 	// users
 	router.GET("/", routeHandler.UserForm)
 	router.POST("/", routeHandler.UpdateActiveDishList)
+
+	router.StaticFile("/deer", "./web/images/deer.png")
+
 }
