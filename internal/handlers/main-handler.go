@@ -104,7 +104,7 @@ func (h *MainHandler) ListActiveChoices(c *gin.Context) {
 
 	data := gin.H{
 		"totalAmount": formatters.DisplayPrice(h.DishChoices.CalcTotalPrice()),
-		"dishes":      h.AllDishList.GetAll(),
+		"dishes":      h.AvailableDishes.GetAll(),
 		"choices":     h.DishChoices.GetUserChoices(),
 		"stackedList": h.DishChoices.CreateCompressedList(),
 	}
